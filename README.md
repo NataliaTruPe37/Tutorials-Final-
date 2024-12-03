@@ -1,47 +1,69 @@
-# Authentication-Secrets
+# Keeper App
 
-In this application we will implement a simple local and Google-based authentication process and we will save a secret in our DB. The provided code already has the EJS and a basic Server configured as the starting point.
+## Leg 1
 
-The MongoDB model is also provided.
+1. Create a new React app
+2. Create the _App.jsx_ component
+3. Create a _Header.jsx_ component that renders a **header** element
+4. Create a _Footer.jsx_ that renders a **footer** element
+5. Create a _Note.jsx_ component to show a **div** element with a **h1** for a title and a **p** for content
+6. Make sure that the final website is styled like the example.
+   - Be careful and thoroughful on how to implement the styles
 
-To complete this task you must:
+---
 
-1. Configure your application on Google console and get the client id
+## Leg 2
 
-2. Configure passport to allow google authentication
+In this next part, we will use the content of the _notes.js_ file to render all those notes into our front end.
 
-- Remember to use create strategy
-- Configure the serialize user method
-- Configure the deserialize user
-- Configure the google strategy
-  - Remember to place the client and client secret in env variables
+1. Modify the _Note_ component, so that via **props** it receives now the title and the content.
+2. Using the **map** function, get the content from the _notes.js_ file and create all the notes that should be displayed in the interface. Don't forget the key element to avoid the warning on the console.
 
-3. Implement the Google authentication endpoints:
+---
 
-- **/auth/google**
-- **/auth/google/secrets**
+## Leg 3
 
-4. Implement the **/login** endpoint
+1. Implement the add note functionality.
+2. Implement the delete note functionality.
 
-- For the **GET** method, render the _login_ component
-- For the **POST** method, retrieve the information from the login form
-- Search for it in the DB, if user/password match, Authenticate the user in the request header, and then send to **/secrets**, else send error and back to _home_
+## In this third leg, we will not use the _notes.js_ file, we will rather start with an empty screen.
 
-5. Implement the **/register** endpoint
+### Add note
 
-- For the **GET** method, just render the _register_ component
-- For the **POST** method, Get the information from the _register_ form
-- Save the information to the DB.
-- Once saved authenticate in session and send to **/secrets**,
-- If there is an error on the register process, show error and allow the user to register again.
+1. Create a constant that keeps track of the title and content.
 
-6. Complete the **/secrets** endpoint
+- Using the provided _CreateArea_ component, create state variables that keep track of both title and content. This could be done with independent variables or a complex state.
+- Convert the _CreateArea_ component to a controlled component by linking the value of the variable to the field itself.
+- Make sure that you are updating values when **onChange** event is triggered and you are updating the state accordingly.
 
-- Check if the user is authenticated, if so, render the _secrets_ template, else redirect the user to the _login_ page
+2. Pass the new note back to the App.
 
-7. Complete the **/submit** endpoint
+- Create a method that triggers the submit event. (Make sure that it is not idly refreshing the screen)
+- On the _App_ component, create a function that updates a notes array by adding a new element that is received as parameter.
 
-- For the **GET**, check if the user is authenticated; if so render the _submit_ component, else _login_
-- For the **POST** method, check the authentication status, if it is correct, save the value provided in the form, else return to _login_
+3. Add new note to an array.
 
-8. Implement the **/logout** endpoint
+- Pass the previously created method via the **props** to the _Note_ component and trigger the method from the **onSubmit** method.
+- Here, we must be aware that our notes array should be part of the **state** of the _App_ component. So, if you haven't done so, make sure that it is so.
+
+4. Take array and render seperate Note components for each item.
+
+- If you have reach this point, your notes should already be rendering accordingly; if there is an issue, make sure you review the **map** function we implemented in the last leg.
+
+---
+
+### Delete note
+
+1. Callback from the Note component to trigger a delete function.
+
+- On the _App_ component, create a function that will deal with the deletion.
+- Share this function with the _Notes_ components via the **props**
+- In the _Note_ component, add a listener to the **Delete** button and trigger the passed function.
+
+2. Use the filter function to filter out the item that needs deletion.
+
+- On the _App_ component delete function, use the **filter** method to remove the element that matches the passed parameter.
+
+3. Pass a id over to the _Note_ component, pass it back to the App when deleting.
+
+- Using the **key** value we got on the _Note_ component call the delete function of the _App_ component.
